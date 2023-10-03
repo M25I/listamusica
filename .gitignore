@@ -30,3 +30,9 @@
 *.exe
 *.out
 *.app
+
+# directorio compilados y temporales
+.\\x64\\**
+.\\.vs\\**
+/.vs/ListadoMusica
+/x64/Debug

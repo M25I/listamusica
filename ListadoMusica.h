@@ -208,5 +208,5 @@ namespace ListadoMusica {
 				this->lbAlbums->Items->Add(archivos[i]->Replace(this->txtDirectorio->Text + "\\", "")->Replace(".txt", ""));
 			}
 		}
-	};
+};
 }

@@ -134,7 +134,7 @@ namespace ListadoMusica {
 					count++;
 					Console::WriteLine("line {0}: {1}", count, str);
 					array<String^>^ datos = str->Split('|');
-					Cancion^ cancion;
+					Cancion^ cancion = gcnew Cancion();
 					cancion->nombre = datos[0];
 					cancion->cantante = datos[2];
 					cancion->duracion = datos[4];
@@ -271,9 +271,10 @@ namespace ListadoMusica {
 			for (int i = 0; i < archivos->Length; i++) {
 				String^ nombre = archivos[i]->Replace(this->txtDirectorio->Text + "\\", "")->Replace(".txt", "");
 				this->lbAlbums->Items->Add(nombre);
-				Album album;
-				album.nombre = nombre;
-				album.canciones = CargarCanciones(archivos[i]);
+				Album^ album = gcnew Album();
+				album->nombre = nombre;
+				album->canciones = CargarCanciones(archivos[i]);
+				albums->Add(album);
 
 			}
 		}

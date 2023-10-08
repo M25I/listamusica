@@ -12,6 +12,7 @@ namespace ListadoMusica {
 	using namespace System;
 	using namespace System::ComponentModel;
 	using namespace System::Collections;
+	using namespace System::Collections::Generic;
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
@@ -67,7 +68,7 @@ namespace ListadoMusica {
 	private: System::Windows::Forms::ListBox^ lbCanciones;
 
 
-		set<Album>^ albums = gcnew set<Album>();
+		List<Album^>^ albums = gcnew List<Album^>();
 
 		void mostrarDialogoSeleccionarDirectorio(Form^ formulario, TextBox^ cajaTexto) {
 			// instancia de FolderBrowserDialog 
@@ -118,8 +119,8 @@ namespace ListadoMusica {
 
 		}
 
-		set<Cancion>^ CargarCanciones(String^ nombreArchivo) {
-			set<Cancion>^ canciones = gcnew set<Cancion>();
+		List<Cancion^>^ CargarCanciones(String^ nombreArchivo) {
+			List<Cancion^>^ canciones = gcnew List<Cancion^>();
 			// Crear un objeto StreamReader para abrir el archivo
 			try
 			{
@@ -137,7 +138,7 @@ namespace ListadoMusica {
 					cancion->nombre = datos[0];
 					cancion->cantante = datos[2];
 					cancion->duracion = datos[4];
-					canciones->insert(cancion);
+					canciones->Add(cancion);
 				}
 			}
 			catch (Exception^ e)

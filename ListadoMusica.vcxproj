@@ -119,9 +119,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Album.cpp" />
+    <ClCompile Include="Cancion.cpp" />
     <ClCompile Include="ListadoMusica.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Album.h" />
+    <ClInclude Include="Cancion.h" />
     <ClInclude Include="ListadoMusica.h">
       <FileType>CppForm</FileType>
     </ClInclude>

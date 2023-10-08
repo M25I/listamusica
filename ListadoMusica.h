@@ -4,6 +4,8 @@
 #include <fstream> 
 #include <sstream> 
 #include <string>
+#include "Album.h"
+#include "Cancion.h"
 
 namespace ListadoMusica {
 
@@ -14,6 +16,7 @@ namespace ListadoMusica {
 	using namespace System::Data;
 	using namespace System::Drawing;
 	using namespace System::IO;
+
 
 	/// <summary>
 	/// Summary for ListadoMusica
@@ -60,6 +63,11 @@ namespace ListadoMusica {
 		/// Required designer variable.
 		/// </summary>
 		System::ComponentModel::Container ^components;
+	private: System::Windows::Forms::Label^ label3;
+	private: System::Windows::Forms::ListBox^ lbCanciones;
+
+
+		set<Album>^ albums = gcnew set<Album>();
 
 		void mostrarDialogoSeleccionarDirectorio(Form^ formulario, TextBox^ cajaTexto) {
 			// instancia de FolderBrowserDialog 
@@ -110,6 +118,39 @@ namespace ListadoMusica {
 
 		}
 
+		set<Cancion>^ CargarCanciones(String^ nombreArchivo) {
+			set<Cancion>^ canciones = gcnew set<Cancion>();
+			// Crear un objeto StreamReader para abrir el archivo
+			try
+			{
+				Console::WriteLine("Abriendo archivo ", nombreArchivo);
+				StreamReader^ din = File::OpenText(nombreArchivo);
+
+				String^ str;
+				int count = 0;
+				while ((str = din->ReadLine()) != nullptr)
+				{
+					count++;
+					Console::WriteLine("line {0}: {1}", count, str);
+					array<String^>^ datos = str->Split('|');
+					Cancion^ cancion;
+					cancion->nombre = datos[0];
+					cancion->cantante = datos[2];
+					cancion->duracion = datos[4];
+					canciones->insert(cancion);
+				}
+			}
+			catch (Exception^ e)
+			{
+				if (dynamic_cast<FileNotFoundException^>(e))
+					Console::WriteLine("Archivo '{0}' no encontrado", nombreArchivo);
+				else
+					Console::WriteLine("Problema al leer archivo '{0}'", nombreArchivo);
+			}
+
+			return canciones;
+		}
+
 #pragma region Windows Form Designer generated code
 		/// <summary>
 		/// Required method for Designer support - do not modify
@@ -123,6 +164,8 @@ namespace ListadoMusica {
 			this->lbAlbums = (gcnew System::Windows::Forms::ListBox());
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->btnBuscar = (gcnew System::Windows::Forms::Button());
+			this->label3 = (gcnew System::Windows::Forms::Label());
+			this->lbCanciones = (gcnew System::Windows::Forms::ListBox());
 			this->SuspendLayout();
 			// 
 			// btnAbrir
@@ -159,6 +202,7 @@ namespace ListadoMusica {
 			this->lbAlbums->Name = L"lbAlbums";
 			this->lbAlbums->Size = System::Drawing::Size(288, 264);
 			this->lbAlbums->TabIndex = 3;
+			this->lbAlbums->SelectedIndexChanged += gcnew System::EventHandler(this, &ListadoMusica::lbAlbums_SelectedIndexChanged);
 			// 
 			// label2
 			// 
@@ -179,11 +223,30 @@ namespace ListadoMusica {
 			this->btnBuscar->UseVisualStyleBackColor = true;
 			this->btnBuscar->Click += gcnew System::EventHandler(this, &ListadoMusica::btnBuscar_Click_1);
 			// 
+			// label3
+			// 
+			this->label3->AutoSize = true;
+			this->label3->Location = System::Drawing::Point(307, 84);
+			this->label3->Name = L"label3";
+			this->label3->Size = System::Drawing::Size(57, 13);
+			this->label3->TabIndex = 7;
+			this->label3->Text = L"Canciones";
+			// 
+			// lbCanciones
+			// 
+			this->lbCanciones->FormattingEnabled = true;
+			this->lbCanciones->Location = System::Drawing::Point(306, 103);
+			this->lbCanciones->Name = L"lbCanciones";
+			this->lbCanciones->Size = System::Drawing::Size(288, 264);
+			this->lbCanciones->TabIndex = 6;
+			// 
 			// ListadoMusica
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(757, 374);
+			this->Controls->Add(this->label3);
+			this->Controls->Add(this->lbCanciones);
 			this->Controls->Add(this->btnBuscar);
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->lbAlbums);
@@ -205,8 +268,25 @@ namespace ListadoMusica {
 			array<String^>^ archivos = this->obtenerListadoDirectorio(this->txtDirectorio->Text, "*.txt");
 			this->lbAlbums->Items->Clear();
 			for (int i = 0; i < archivos->Length; i++) {
-				this->lbAlbums->Items->Add(archivos[i]->Replace(this->txtDirectorio->Text + "\\", "")->Replace(".txt", ""));
+				String^ nombre = archivos[i]->Replace(this->txtDirectorio->Text + "\\", "")->Replace(".txt", "");
+				this->lbAlbums->Items->Add(nombre);
+				Album album;
+				album.nombre = nombre;
+				album.canciones = CargarCanciones(archivos[i]);
+
 			}
 		}
-};
+		private: System::Void lbAlbums_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
+			// Obtiene el album seleccionado en listbox
+			String^ nombreAlbum = lbAlbums->SelectedItem->ToString();
+			for each (Album^ album in albums) {
+				if (album->nombre->Equals(nombreAlbum)) {
+					lbCanciones->Items->Clear();
+					for each (Cancion ^ cancion in album->canciones) {
+						lbCanciones->Items->Add(cancion->nombre);
+					}
+				}
+			}
+		}
+	};
 }

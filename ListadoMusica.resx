@@ -121,7 +121,7 @@
   <data name="pictureBox1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAH8AAACACAYAAAAiebbfAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vQAADr0BR/uQrQAAG+9JREFUeF7t3QWYbM1RxvHg7u7ukADBCU5w1+ABgjskWIDgwQMEJ7i7u/Ph8OAk
+        vAAADrwBlbxySQAAG+9JREFUeF7t3QWYbM1RxvHg7u7ukADBCU5w1+ABgjskWIDgwQMEJ7i7u/Ph8OAk
         OAQP7m79m/3+9/bON3vv7N6ZnZm78z5P7cyec+ac7qru6urq6jp3O0A8+qDHvJNW4UkGvdigtx304EHf
         NOjnB/3RoH8c9N+D/m8FOe78Iwf93KBvHOT3bzPI/Z540CpUlkdb/HfExoGxGEzwMxx7wUHvPujrBv32
         oH8b9L+D/nnQHwz6iUHOffqgDxv0noPuO+gtB735nZ9vP8hx5z9j0NcP+slBfu8+7ue+vzXoawe926AX
@@ -246,7 +246,7 @@
   <data name="pictureBox2.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vQAADr0BR/uQrQAABJZJREFUeF7tnUuvZUMcR49X6HSCCeI5IQZCIvgAPcG0J0gkPgIdjETMMBF8BAlh
+        vAAADrwBlbxySQAABJZJREFUeF7tnUuvZUMcR49X6HSCCeI5IQZCIvgAPcG0J0gkPgIdjETMMBF8BAlh
         2MYezUiYMCTMvBKvkcdIe/x+Z/+3qpR7t7p3n7OPOrVWstL3VlK9z95n9SN316m9AgAAAAAAAAAAAAAA
         AAAA2Dwn5Bn5sjzlgU7wub4kH5UnPdAr78m/wvPytNx3fI6/y/G8z8kuuUOOF2H0bbnvvCPL875Ndsf9
         srwQn8l951NZnrevRXcQQJIAQgLoCAJIEkBIAB1BAEkCCAmgIwggSQAhAXQEASQJICSAjiCAJAGEBNAR
@@ -269,18 +269,6 @@
         SUVORK5CYII=
 </value>
   </data>
-  <metadata name="clAlbum.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="clCancion.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="clArtista.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="clDuracion.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
   <metadata name="clAlbum.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>

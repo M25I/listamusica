@@ -211,6 +211,23 @@ namespace ListadoMusica {
 				gvCola->Rows[numFilas]->Cells[3]->Value = cancion->duracion;
 			}
 		}
+
+		static int compareByAlbum(Cancion^ a, Cancion^ b) {
+			return  (a->nombreAlbum->CompareTo(b->nombreAlbum));
+		}
+
+		static int compareByCancion(Cancion^ a, Cancion^ b) {
+			return  (a->nombre->CompareTo(b->nombre));
+		}
+
+		static int compareByArtista(Cancion^ a, Cancion^ b) {
+			return  (a->cantante->CompareTo(b->cantante));
+		}
+
+		static int compareByDuracion(Cancion^ a, Cancion^ b) {
+			return  (a->duracion->CompareTo(b->duracion));
+		}
+
 #pragma region Windows Form Designer generated code
 		/// <summary>
 		/// Required method for Designer support - do not modify
@@ -339,6 +356,7 @@ namespace ListadoMusica {
 			this->btnNext->TabIndex = 9;
 			this->btnNext->Text = L"Siguiente";
 			this->btnNext->UseVisualStyleBackColor = true;
+			this->btnNext->Click += gcnew System::EventHandler(this, &ListadoMusica::btnNext_Click);
 			// 
 			// pictureBox1
 			// 
@@ -431,6 +449,7 @@ namespace ListadoMusica {
 			this->btnOrdenar->TabIndex = 19;
 			this->btnOrdenar->Text = L"Ordenar";
 			this->btnOrdenar->UseVisualStyleBackColor = true;
+			this->btnOrdenar->Click += gcnew System::EventHandler(this, &ListadoMusica::btnOrdenar_Click);
 			// 
 			// groupBox1
 			// 
@@ -674,6 +693,40 @@ private: System::Void btnPlay_Click(System::Object^ sender, System::EventArgs^ e
 	lblCancion->Text = gvCola->Rows[0]->Cells[1]->Value->ToString();
 	lblArtista->Text = gvCola->Rows[0]->Cells[2]->Value->ToString();
 	lblDuracion->Text= gvCola->Rows[0]->Cells[3]->Value->ToString(); 
+}
+private: System::Void btnNext_Click(System::Object^ sender, System::EventArgs^ e) {
+	Cancion^ cancion = playlist[0];
+	playlist->RemoveAt(0);
+	playlist->Add(cancion);
+
+	refrescarCola();
+}
+private: System::Void btnOrdenar_Click(System::Object^ sender, System::EventArgs^ e) {
+	if (rBAlbum->Checked == true) {
+		Comparison<Cancion^>^ comparisonDelegate = gcnew Comparison<Cancion^>(&compareByAlbum);
+		playlist->Sort(comparisonDelegate);
+	}
+
+	if (rBCancion->Checked == true) {
+		Comparison<Cancion^>^ comparisonDelegate = gcnew Comparison<Cancion^>(&compareByCancion);
+		playlist->Sort(comparisonDelegate);
+	}
+
+	if (rBArtista->Checked == true) {
+		Comparison<Cancion^>^ comparisonDelegate = gcnew Comparison<Cancion^>(&compareByArtista);
+		playlist->Sort(comparisonDelegate);
+	}
+
+	if (rBDuracion->Checked == true) {
+		Comparison<Cancion^>^ comparisonDelegate = gcnew Comparison<Cancion^>(&compareByDuracion);
+		playlist->Sort(comparisonDelegate);
+	}
+
+	if (rBDesc->Checked == true) {
+		playlist->Reverse();
+	}
+
+	refrescarCola();
 }
 };
 }

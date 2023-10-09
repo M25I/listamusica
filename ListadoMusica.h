@@ -137,6 +137,10 @@ namespace ListadoMusica {
 
 				// Mostrar la ruta en el TextBox
 				cajaTexto->Text = ruta;
+
+				if (String::IsNullOrEmpty(ruta) == false && String::IsNullOrWhiteSpace(ruta) == false) {
+					btnBuscar->Enabled = true;
+				}
 			}
 
 		}
@@ -323,6 +327,7 @@ namespace ListadoMusica {
 			// 
 			// btnBuscar
 			// 
+			this->btnBuscar->Enabled = false;
 			this->btnBuscar->Location = System::Drawing::Point(60, 79);
 			this->btnBuscar->Name = L"btnBuscar";
 			this->btnBuscar->Size = System::Drawing::Size(240, 23);
@@ -347,6 +352,7 @@ namespace ListadoMusica {
 			this->lbCanciones->Name = L"lbCanciones";
 			this->lbCanciones->Size = System::Drawing::Size(288, 264);
 			this->lbCanciones->TabIndex = 6;
+			this->lbCanciones->SelectedIndexChanged += gcnew System::EventHandler(this, &ListadoMusica::lbCanciones_SelectedIndexChanged);
 			// 
 			// btnNext
 			// 
@@ -433,6 +439,7 @@ namespace ListadoMusica {
 			// 
 			// btnAgregar
 			// 
+			this->btnAgregar->Enabled = false;
 			this->btnAgregar->Location = System::Drawing::Point(393, 79);
 			this->btnAgregar->Name = L"btnAgregar";
 			this->btnAgregar->Size = System::Drawing::Size(201, 23);
@@ -650,6 +657,9 @@ namespace ListadoMusica {
 			this->gvCola->Rows->Clear();
 			this->playlist->Clear();
 			albums->Clear();
+
+			btnAgregar->Enabled = false;
+
 			for (int i = 0; i < archivos->Length; i++) {
 				String^ nombre = archivos[i]->Replace(this->txtDirectorio->Text + "\\", "")->Replace(".txt", "");
 				this->lbAlbums->Items->Add(nombre);
@@ -661,6 +671,8 @@ namespace ListadoMusica {
 			}
 		}
 		private: System::Void lbAlbums_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
+			btnAgregar->Enabled = false;
+
 			// Obtiene el album seleccionado en listbox
 			String^ nombreAlbum = lbAlbums->SelectedItem->ToString();
 			for each (Album^ album in albums) {
@@ -689,17 +701,21 @@ namespace ListadoMusica {
 		refrescarCola();
 	}
 private: System::Void btnPlay_Click(System::Object^ sender, System::EventArgs^ e) {
-	lblAlbum->Text = gvCola->Rows[0]->Cells[0]->Value->ToString();
-	lblCancion->Text = gvCola->Rows[0]->Cells[1]->Value->ToString();
-	lblArtista->Text = gvCola->Rows[0]->Cells[2]->Value->ToString();
-	lblDuracion->Text= gvCola->Rows[0]->Cells[3]->Value->ToString(); 
+	if (playlist->Count > 0) {
+		lblAlbum->Text = gvCola->Rows[0]->Cells[0]->Value->ToString();
+		lblCancion->Text = gvCola->Rows[0]->Cells[1]->Value->ToString();
+		lblArtista->Text = gvCola->Rows[0]->Cells[2]->Value->ToString();
+		lblDuracion->Text= gvCola->Rows[0]->Cells[3]->Value->ToString(); 
+	}
 }
 private: System::Void btnNext_Click(System::Object^ sender, System::EventArgs^ e) {
-	Cancion^ cancion = playlist[0];
-	playlist->RemoveAt(0);
-	playlist->Add(cancion);
+	if (playlist->Count > 0){
+		Cancion^ cancion = playlist[0];
+		playlist->RemoveAt(0);
+		playlist->Add(cancion);
 
-	refrescarCola();
+		refrescarCola();
+	}
 }
 private: System::Void btnOrdenar_Click(System::Object^ sender, System::EventArgs^ e) {
 	if (rBAlbum->Checked == true) {
@@ -727,6 +743,9 @@ private: System::Void btnOrdenar_Click(System::Object^ sender, System::EventArgs
 	}
 
 	refrescarCola();
+}
+private: System::Void lbCanciones_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
+	btnAgregar->Enabled = true;
 }
 };
 }

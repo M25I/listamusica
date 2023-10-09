@@ -76,8 +76,10 @@ namespace ListadoMusica {
 	private: System::Windows::Forms::Label^ lblCancion;
 	private: System::Windows::Forms::Label^ lblArtista;
 	private: System::Windows::Forms::Label^ lblAlbum;
-	private: System::Windows::Forms::Button^ button2;
-	private: System::Windows::Forms::Button^ button3;
+	private: System::Windows::Forms::Button^ btnAgregar;
+	private: System::Windows::Forms::Button^ btnOrdenar;
+
+
 	private: System::Windows::Forms::GroupBox^ groupBox1;
 	private: System::Windows::Forms::RadioButton^ rBDesc;
 	private: System::Windows::Forms::RadioButton^ rBAsc;
@@ -92,6 +94,16 @@ namespace ListadoMusica {
 	private: System::Windows::Forms::RadioButton^ rBAlbum;
 	private: System::Windows::Forms::RadioButton^ rBDuracion;
 	private: System::Windows::Forms::Splitter^ splitter1;
+	private: System::Windows::Forms::DataGridView^ gvCola;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^ clAlbum;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^ clCancion;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^ clArtista;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^ clDuracion;
+	private: System::Windows::Forms::Button^ btnPlay;
+
+
+
+
 
 
 
@@ -102,6 +114,7 @@ namespace ListadoMusica {
 
 
 		List<Album^>^ albums = gcnew List<Album^>();
+		List<Cancion^>^ playlist = gcnew List<Cancion^>(); //Cola
 
 		void mostrarDialogoSeleccionarDirectorio(Form^ formulario, TextBox^ cajaTexto) {
 			// instancia de FolderBrowserDialog 
@@ -152,7 +165,7 @@ namespace ListadoMusica {
 
 		}
 
-		List<Cancion^>^ CargarCanciones(String^ nombreArchivo) {
+		List<Cancion^>^ CargarCanciones(String^ nombreArchivo, String^ nombreAlbum) {
 			List<Cancion^>^ canciones = gcnew List<Cancion^>();
 			// Crear un objeto StreamReader para abrir el archivo
 			try
@@ -171,6 +184,7 @@ namespace ListadoMusica {
 					cancion->nombre = datos[0];
 					cancion->cantante = datos[2];
 					cancion->duracion = datos[4];
+					cancion->nombreAlbum = nombreAlbum;
 					canciones->Add(cancion);
 				}
 			}
@@ -185,6 +199,18 @@ namespace ListadoMusica {
 			return canciones;
 		}
 
+		void refrescarCola() {
+			gvCola->Rows->Clear();
+			for each  (Cancion^ cancion in playlist)
+			{
+				gvCola->Rows->Add();
+				int numFilas = gvCola->Rows->Count - 1;
+				gvCola->Rows[numFilas]->Cells[0]->Value = cancion->nombreAlbum;
+				gvCola->Rows[numFilas]->Cells[1]->Value = cancion->nombre;
+				gvCola->Rows[numFilas]->Cells[2]->Value = cancion->cantante;
+				gvCola->Rows[numFilas]->Cells[3]->Value = cancion->duracion;
+			}
+		}
 #pragma region Windows Form Designer generated code
 		/// <summary>
 		/// Required method for Designer support - do not modify
@@ -209,8 +235,8 @@ namespace ListadoMusica {
 			this->lblCancion = (gcnew System::Windows::Forms::Label());
 			this->lblArtista = (gcnew System::Windows::Forms::Label());
 			this->lblAlbum = (gcnew System::Windows::Forms::Label());
-			this->button2 = (gcnew System::Windows::Forms::Button());
-			this->button3 = (gcnew System::Windows::Forms::Button());
+			this->btnAgregar = (gcnew System::Windows::Forms::Button());
+			this->btnOrdenar = (gcnew System::Windows::Forms::Button());
 			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
 			this->rBDesc = (gcnew System::Windows::Forms::RadioButton());
 			this->rBAsc = (gcnew System::Windows::Forms::RadioButton());
@@ -220,10 +246,17 @@ namespace ListadoMusica {
 			this->rBArtista = (gcnew System::Windows::Forms::RadioButton());
 			this->rBAlbum = (gcnew System::Windows::Forms::RadioButton());
 			this->splitter1 = (gcnew System::Windows::Forms::Splitter());
+			this->gvCola = (gcnew System::Windows::Forms::DataGridView());
+			this->clAlbum = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->clCancion = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->clArtista = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->clDuracion = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->btnPlay = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
 			this->groupBox1->SuspendLayout();
 			this->groupBox2->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->gvCola))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// btnAbrir
@@ -300,16 +333,16 @@ namespace ListadoMusica {
 			// 
 			// btnNext
 			// 
-			this->btnNext->Location = System::Drawing::Point(1002, 136);
+			this->btnNext->Location = System::Drawing::Point(1002, 127);
 			this->btnNext->Name = L"btnNext";
-			this->btnNext->Size = System::Drawing::Size(75, 23);
+			this->btnNext->Size = System::Drawing::Size(75, 37);
 			this->btnNext->TabIndex = 9;
 			this->btnNext->Text = L"Siguiente";
 			this->btnNext->UseVisualStyleBackColor = true;
 			// 
 			// pictureBox1
 			// 
-			this->pictureBox1->BackColor = System::Drawing::Color::MintCream;
+			this->pictureBox1->BackColor = System::Drawing::Color::Transparent;
 			this->pictureBox1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox1.Image")));
 			this->pictureBox1->Location = System::Drawing::Point(768, 31);
 			this->pictureBox1->Name = L"pictureBox1";
@@ -349,9 +382,11 @@ namespace ListadoMusica {
 			// lblCancion
 			// 
 			this->lblCancion->AutoSize = true;
+			this->lblCancion->Font = (gcnew System::Drawing::Font(L"MV Boli", 9.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
 			this->lblCancion->Location = System::Drawing::Point(926, 31);
 			this->lblCancion->Name = L"lblCancion";
-			this->lblCancion->Size = System::Drawing::Size(46, 13);
+			this->lblCancion->Size = System::Drawing::Size(59, 17);
 			this->lblCancion->TabIndex = 15;
 			this->lblCancion->Text = L"Canción";
 			// 
@@ -366,30 +401,36 @@ namespace ListadoMusica {
 			// 
 			// lblAlbum
 			// 
-			this->lblAlbum->AutoSize = true;
-			this->lblAlbum->Location = System::Drawing::Point(808, 15);
+			this->lblAlbum->BackColor = System::Drawing::Color::Transparent;
+			this->lblAlbum->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->lblAlbum->Font = (gcnew System::Drawing::Font(L"MV Boli", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lblAlbum->ForeColor = System::Drawing::Color::Black;
+			this->lblAlbum->Location = System::Drawing::Point(768, 130);
 			this->lblAlbum->Name = L"lblAlbum";
-			this->lblAlbum->Size = System::Drawing::Size(36, 13);
+			this->lblAlbum->Size = System::Drawing::Size(127, 34);
 			this->lblAlbum->TabIndex = 17;
 			this->lblAlbum->Text = L"Album";
+			this->lblAlbum->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
 			// 
-			// button2
+			// btnAgregar
 			// 
-			this->button2->Location = System::Drawing::Point(393, 79);
-			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(201, 23);
-			this->button2->TabIndex = 18;
-			this->button2->Text = L"Agregar canción a cola";
-			this->button2->UseVisualStyleBackColor = true;
+			this->btnAgregar->Location = System::Drawing::Point(393, 79);
+			this->btnAgregar->Name = L"btnAgregar";
+			this->btnAgregar->Size = System::Drawing::Size(201, 23);
+			this->btnAgregar->TabIndex = 18;
+			this->btnAgregar->Text = L"Agregar canción a cola";
+			this->btnAgregar->UseVisualStyleBackColor = true;
+			this->btnAgregar->Click += gcnew System::EventHandler(this, &ListadoMusica::btnAgregar_Click);
 			// 
-			// button3
+			// btnOrdenar
 			// 
-			this->button3->Location = System::Drawing::Point(636, 344);
-			this->button3->Name = L"button3";
-			this->button3->Size = System::Drawing::Size(75, 23);
-			this->button3->TabIndex = 19;
-			this->button3->Text = L"Ordenar";
-			this->button3->UseVisualStyleBackColor = true;
+			this->btnOrdenar->Location = System::Drawing::Point(615, 344);
+			this->btnOrdenar->Name = L"btnOrdenar";
+			this->btnOrdenar->Size = System::Drawing::Size(75, 23);
+			this->btnOrdenar->TabIndex = 19;
+			this->btnOrdenar->Text = L"Ordenar";
+			this->btnOrdenar->UseVisualStyleBackColor = true;
 			// 
 			// groupBox1
 			// 
@@ -397,7 +438,7 @@ namespace ListadoMusica {
 			this->groupBox1->Controls->Add(this->rBAsc);
 			this->groupBox1->Location = System::Drawing::Point(600, 84);
 			this->groupBox1->Name = L"groupBox1";
-			this->groupBox1->Size = System::Drawing::Size(144, 100);
+			this->groupBox1->Size = System::Drawing::Size(111, 100);
 			this->groupBox1->TabIndex = 20;
 			this->groupBox1->TabStop = false;
 			this->groupBox1->Text = L"Orden";
@@ -405,7 +446,7 @@ namespace ListadoMusica {
 			// rBDesc
 			// 
 			this->rBDesc->AutoSize = true;
-			this->rBDesc->Location = System::Drawing::Point(22, 51);
+			this->rBDesc->Location = System::Drawing::Point(8, 51);
 			this->rBDesc->Name = L"rBDesc";
 			this->rBDesc->Size = System::Drawing::Size(89, 17);
 			this->rBDesc->TabIndex = 1;
@@ -416,7 +457,7 @@ namespace ListadoMusica {
 			// 
 			this->rBAsc->AutoSize = true;
 			this->rBAsc->Checked = true;
-			this->rBAsc->Location = System::Drawing::Point(22, 28);
+			this->rBAsc->Location = System::Drawing::Point(8, 28);
 			this->rBAsc->Name = L"rBAsc";
 			this->rBAsc->Size = System::Drawing::Size(82, 17);
 			this->rBAsc->TabIndex = 0;
@@ -432,7 +473,7 @@ namespace ListadoMusica {
 			this->groupBox2->Controls->Add(this->rBAlbum);
 			this->groupBox2->Location = System::Drawing::Point(600, 207);
 			this->groupBox2->Name = L"groupBox2";
-			this->groupBox2->Size = System::Drawing::Size(144, 114);
+			this->groupBox2->Size = System::Drawing::Size(111, 114);
 			this->groupBox2->TabIndex = 21;
 			this->groupBox2->TabStop = false;
 			this->groupBox2->Text = L"Ordenar por";
@@ -440,7 +481,7 @@ namespace ListadoMusica {
 			// rBDuracion
 			// 
 			this->rBDuracion->AutoSize = true;
-			this->rBDuracion->Location = System::Drawing::Point(22, 89);
+			this->rBDuracion->Location = System::Drawing::Point(8, 89);
 			this->rBDuracion->Name = L"rBDuracion";
 			this->rBDuracion->Size = System::Drawing::Size(68, 17);
 			this->rBDuracion->TabIndex = 5;
@@ -450,7 +491,7 @@ namespace ListadoMusica {
 			// rBCancion
 			// 
 			this->rBCancion->AutoSize = true;
-			this->rBCancion->Location = System::Drawing::Point(22, 66);
+			this->rBCancion->Location = System::Drawing::Point(8, 66);
 			this->rBCancion->Name = L"rBCancion";
 			this->rBCancion->Size = System::Drawing::Size(64, 17);
 			this->rBCancion->TabIndex = 4;
@@ -460,7 +501,7 @@ namespace ListadoMusica {
 			// rBArtista
 			// 
 			this->rBArtista->AutoSize = true;
-			this->rBArtista->Location = System::Drawing::Point(22, 43);
+			this->rBArtista->Location = System::Drawing::Point(8, 43);
 			this->rBArtista->Name = L"rBArtista";
 			this->rBArtista->Size = System::Drawing::Size(54, 17);
 			this->rBArtista->TabIndex = 3;
@@ -471,7 +512,7 @@ namespace ListadoMusica {
 			// 
 			this->rBAlbum->AutoSize = true;
 			this->rBAlbum->Checked = true;
-			this->rBAlbum->Location = System::Drawing::Point(22, 20);
+			this->rBAlbum->Location = System::Drawing::Point(8, 20);
 			this->rBAlbum->Name = L"rBAlbum";
 			this->rBAlbum->Size = System::Drawing::Size(54, 17);
 			this->rBAlbum->TabIndex = 2;
@@ -487,17 +528,68 @@ namespace ListadoMusica {
 			this->splitter1->TabIndex = 22;
 			this->splitter1->TabStop = false;
 			// 
+			// gvCola
+			// 
+			this->gvCola->AllowUserToAddRows = false;
+			this->gvCola->AllowUserToDeleteRows = false;
+			this->gvCola->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+			this->gvCola->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(4) {
+				this->clAlbum, this->clCancion,
+					this->clArtista, this->clDuracion
+			});
+			this->gvCola->Location = System::Drawing::Point(717, 188);
+			this->gvCola->Name = L"gvCola";
+			this->gvCola->ReadOnly = true;
+			this->gvCola->Size = System::Drawing::Size(416, 169);
+			this->gvCola->TabIndex = 23;
+			// 
+			// clAlbum
+			// 
+			this->clAlbum->HeaderText = L"Album";
+			this->clAlbum->Name = L"clAlbum";
+			this->clAlbum->ReadOnly = true;
+			// 
+			// clCancion
+			// 
+			this->clCancion->HeaderText = L"Canción";
+			this->clCancion->Name = L"clCancion";
+			this->clCancion->ReadOnly = true;
+			// 
+			// clArtista
+			// 
+			this->clArtista->HeaderText = L"Artista";
+			this->clArtista->Name = L"clArtista";
+			this->clArtista->ReadOnly = true;
+			// 
+			// clDuracion
+			// 
+			this->clDuracion->HeaderText = L"Duración";
+			this->clDuracion->Name = L"clDuracion";
+			this->clDuracion->ReadOnly = true;
+			// 
+			// btnPlay
+			// 
+			this->btnPlay->Location = System::Drawing::Point(929, 127);
+			this->btnPlay->Name = L"btnPlay";
+			this->btnPlay->Size = System::Drawing::Size(67, 37);
+			this->btnPlay->TabIndex = 24;
+			this->btnPlay->Text = L"Play";
+			this->btnPlay->UseVisualStyleBackColor = true;
+			this->btnPlay->Click += gcnew System::EventHandler(this, &ListadoMusica::btnPlay_Click);
+			// 
 			// ListadoMusica
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::Color::LightGreen;
 			this->ClientSize = System::Drawing::Size(1138, 374);
+			this->Controls->Add(this->btnPlay);
+			this->Controls->Add(this->gvCola);
 			this->Controls->Add(this->splitter1);
 			this->Controls->Add(this->groupBox2);
 			this->Controls->Add(this->groupBox1);
-			this->Controls->Add(this->button3);
-			this->Controls->Add(this->button2);
+			this->Controls->Add(this->btnOrdenar);
+			this->Controls->Add(this->btnAgregar);
 			this->Controls->Add(this->lblAlbum);
 			this->Controls->Add(this->lblArtista);
 			this->Controls->Add(this->lblCancion);
@@ -522,6 +614,7 @@ namespace ListadoMusica {
 			this->groupBox1->PerformLayout();
 			this->groupBox2->ResumeLayout(false);
 			this->groupBox2->PerformLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->gvCola))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -534,12 +627,16 @@ namespace ListadoMusica {
 		private: System::Void btnBuscar_Click_1(System::Object^ sender, System::EventArgs^ e) {
 			array<String^>^ archivos = this->obtenerListadoDirectorio(this->txtDirectorio->Text, "*.txt");
 			this->lbAlbums->Items->Clear();
+			this->lbCanciones->Items->Clear();
+			this->gvCola->Rows->Clear();
+			this->playlist->Clear();
+			albums->Clear();
 			for (int i = 0; i < archivos->Length; i++) {
 				String^ nombre = archivos[i]->Replace(this->txtDirectorio->Text + "\\", "")->Replace(".txt", "");
 				this->lbAlbums->Items->Add(nombre);
 				Album^ album = gcnew Album();
 				album->nombre = nombre;
-				album->canciones = CargarCanciones(archivos[i]);
+				album->canciones = CargarCanciones(archivos[i], nombre);
 				albums->Add(album);
 
 			}
@@ -556,5 +653,27 @@ namespace ListadoMusica {
 				}
 			}
 		}
-	};
+	private: System::Void btnAgregar_Click(System::Object^ sender, System::EventArgs^ e) {
+		String^ nombreAlbum = lbAlbums->SelectedItem->ToString();
+		String^ nombreCancion = lbCanciones->SelectedItem->ToString();
+		array<String^>^ datos = nombreCancion->Split('-');
+
+		Cancion^ cancion = gcnew Cancion(); 
+		cancion->nombreAlbum = nombreAlbum;
+
+		cancion->nombre = datos[0]->Trim();
+		cancion->cantante = datos[1]->Trim();
+		cancion->duracion = datos[2]->Trim();
+
+		playlist->Add(cancion);
+
+		refrescarCola();
+	}
+private: System::Void btnPlay_Click(System::Object^ sender, System::EventArgs^ e) {
+	lblAlbum->Text = gvCola->Rows[0]->Cells[0]->Value->ToString();
+	lblCancion->Text = gvCola->Rows[0]->Cells[1]->Value->ToString();
+	lblArtista->Text = gvCola->Rows[0]->Cells[2]->Value->ToString();
+	lblDuracion->Text= gvCola->Rows[0]->Cells[3]->Value->ToString(); 
+}
+};
 }

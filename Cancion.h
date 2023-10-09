@@ -8,4 +8,5 @@ public:
     String^ nombre;
     String^ cantante;
     String^ duracion;
+    String^ nombreAlbum;
 };

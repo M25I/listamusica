@@ -301,9 +301,11 @@ namespace ListadoMusica {
 			// label1
 			// 
 			this->label1->AutoSize = true;
-			this->label1->Location = System::Drawing::Point(13, 13);
+			this->label1->Font = (gcnew System::Drawing::Font(L"MV Boli", 8.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->label1->Location = System::Drawing::Point(13, 11);
 			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(104, 13);
+			this->label1->Size = System::Drawing::Size(114, 16);
 			this->label1->TabIndex = 2;
 			this->label1->Text = L"Directorio de Musica";
 			// 
@@ -319,9 +321,11 @@ namespace ListadoMusica {
 			// label2
 			// 
 			this->label2->AutoSize = true;
-			this->label2->Location = System::Drawing::Point(13, 84);
+			this->label2->Font = (gcnew System::Drawing::Font(L"MV Boli", 9, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->label2->Location = System::Drawing::Point(9, 81);
 			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(41, 13);
+			this->label2->Size = System::Drawing::Size(53, 17);
 			this->label2->TabIndex = 4;
 			this->label2->Text = L"Albums";
 			// 
@@ -339,9 +343,11 @@ namespace ListadoMusica {
 			// label3
 			// 
 			this->label3->AutoSize = true;
-			this->label3->Location = System::Drawing::Point(307, 84);
+			this->label3->Font = (gcnew System::Drawing::Font(L"MV Boli", 9, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->label3->Location = System::Drawing::Point(306, 81);
 			this->label3->Name = L"label3";
-			this->label3->Size = System::Drawing::Size(57, 13);
+			this->label3->Size = System::Drawing::Size(69, 17);
 			this->label3->TabIndex = 7;
 			this->label3->Text = L"Canciones";
 			// 
@@ -356,12 +362,19 @@ namespace ListadoMusica {
 			// 
 			// btnNext
 			// 
-			this->btnNext->Location = System::Drawing::Point(1002, 127);
+			this->btnNext->BackColor = System::Drawing::Color::DarkRed;
+			this->btnNext->FlatAppearance->BorderColor = System::Drawing::Color::Black;
+			this->btnNext->FlatAppearance->MouseOverBackColor = System::Drawing::Color::DarkGreen;
+			this->btnNext->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->btnNext->Font = (gcnew System::Drawing::Font(L"MV Boli", 9.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->btnNext->ForeColor = System::Drawing::Color::White;
+			this->btnNext->Location = System::Drawing::Point(994, 127);
 			this->btnNext->Name = L"btnNext";
-			this->btnNext->Size = System::Drawing::Size(75, 37);
+			this->btnNext->Size = System::Drawing::Size(83, 37);
 			this->btnNext->TabIndex = 9;
 			this->btnNext->Text = L"Siguiente";
-			this->btnNext->UseVisualStyleBackColor = true;
+			this->btnNext->UseVisualStyleBackColor = false;
 			this->btnNext->Click += gcnew System::EventHandler(this, &ListadoMusica::btnNext_Click);
 			// 
 			// pictureBox1
@@ -388,18 +401,22 @@ namespace ListadoMusica {
 			// lblDuracion
 			// 
 			this->lblDuracion->AutoSize = true;
+			this->lblDuracion->Font = (gcnew System::Drawing::Font(L"MV Boli", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
 			this->lblDuracion->Location = System::Drawing::Point(1083, 89);
 			this->lblDuracion->Name = L"lblDuracion";
-			this->lblDuracion->Size = System::Drawing::Size(50, 13);
+			this->lblDuracion->Size = System::Drawing::Size(55, 17);
 			this->lblDuracion->TabIndex = 13;
 			this->lblDuracion->Text = L"Duracion";
 			// 
 			// lbl
 			// 
 			this->lbl->AutoSize = true;
+			this->lbl->Font = (gcnew System::Drawing::Font(L"MV Boli", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
 			this->lbl->Location = System::Drawing::Point(901, 89);
 			this->lbl->Name = L"lbl";
-			this->lbl->Size = System::Drawing::Size(22, 13);
+			this->lbl->Size = System::Drawing::Size(28, 17);
 			this->lbl->TabIndex = 14;
 			this->lbl->Text = L"0:0";
 			// 
@@ -408,6 +425,7 @@ namespace ListadoMusica {
 			this->lblCancion->AutoSize = true;
 			this->lblCancion->Font = (gcnew System::Drawing::Font(L"MV Boli", 9.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
+			this->lblCancion->ForeColor = System::Drawing::Color::DarkGreen;
 			this->lblCancion->Location = System::Drawing::Point(926, 31);
 			this->lblCancion->Name = L"lblCancion";
 			this->lblCancion->Size = System::Drawing::Size(59, 17);
@@ -417,17 +435,21 @@ namespace ListadoMusica {
 			// lblArtista
 			// 
 			this->lblArtista->AutoSize = true;
-			this->lblArtista->Location = System::Drawing::Point(926, 51);
+			this->lblArtista->Font = (gcnew System::Drawing::Font(L"MV Boli", 9, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lblArtista->ForeColor = System::Drawing::Color::SeaGreen;
+			this->lblArtista->Location = System::Drawing::Point(926, 47);
 			this->lblArtista->Name = L"lblArtista";
-			this->lblArtista->Size = System::Drawing::Size(36, 13);
+			this->lblArtista->Size = System::Drawing::Size(47, 17);
 			this->lblArtista->TabIndex = 16;
 			this->lblArtista->Text = L"Artista";
 			// 
 			// lblAlbum
 			// 
 			this->lblAlbum->BackColor = System::Drawing::Color::Transparent;
+			this->lblAlbum->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->lblAlbum->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->lblAlbum->Font = (gcnew System::Drawing::Font(L"MV Boli", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+			this->lblAlbum->Font = (gcnew System::Drawing::Font(L"MV Boli", 9, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->lblAlbum->ForeColor = System::Drawing::Color::Black;
 			this->lblAlbum->Location = System::Drawing::Point(768, 130);
@@ -462,6 +484,8 @@ namespace ListadoMusica {
 			// 
 			this->groupBox1->Controls->Add(this->rBDesc);
 			this->groupBox1->Controls->Add(this->rBAsc);
+			this->groupBox1->Font = (gcnew System::Drawing::Font(L"MV Boli", 9.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
 			this->groupBox1->Location = System::Drawing::Point(600, 84);
 			this->groupBox1->Name = L"groupBox1";
 			this->groupBox1->Size = System::Drawing::Size(111, 100);
@@ -474,7 +498,7 @@ namespace ListadoMusica {
 			this->rBDesc->AutoSize = true;
 			this->rBDesc->Location = System::Drawing::Point(8, 51);
 			this->rBDesc->Name = L"rBDesc";
-			this->rBDesc->Size = System::Drawing::Size(89, 17);
+			this->rBDesc->Size = System::Drawing::Size(98, 21);
 			this->rBDesc->TabIndex = 1;
 			this->rBDesc->Text = L"Descendente";
 			this->rBDesc->UseVisualStyleBackColor = true;
@@ -485,7 +509,7 @@ namespace ListadoMusica {
 			this->rBAsc->Checked = true;
 			this->rBAsc->Location = System::Drawing::Point(8, 28);
 			this->rBAsc->Name = L"rBAsc";
-			this->rBAsc->Size = System::Drawing::Size(82, 17);
+			this->rBAsc->Size = System::Drawing::Size(92, 21);
 			this->rBAsc->TabIndex = 0;
 			this->rBAsc->TabStop = true;
 			this->rBAsc->Text = L"Ascendente";
@@ -497,6 +521,8 @@ namespace ListadoMusica {
 			this->groupBox2->Controls->Add(this->rBCancion);
 			this->groupBox2->Controls->Add(this->rBArtista);
 			this->groupBox2->Controls->Add(this->rBAlbum);
+			this->groupBox2->Font = (gcnew System::Drawing::Font(L"MV Boli", 9.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
 			this->groupBox2->Location = System::Drawing::Point(600, 207);
 			this->groupBox2->Name = L"groupBox2";
 			this->groupBox2->Size = System::Drawing::Size(111, 114);
@@ -509,7 +535,7 @@ namespace ListadoMusica {
 			this->rBDuracion->AutoSize = true;
 			this->rBDuracion->Location = System::Drawing::Point(8, 89);
 			this->rBDuracion->Name = L"rBDuracion";
-			this->rBDuracion->Size = System::Drawing::Size(68, 17);
+			this->rBDuracion->Size = System::Drawing::Size(77, 21);
 			this->rBDuracion->TabIndex = 5;
 			this->rBDuracion->Text = L"Duración";
 			this->rBDuracion->UseVisualStyleBackColor = true;
@@ -519,7 +545,7 @@ namespace ListadoMusica {
 			this->rBCancion->AutoSize = true;
 			this->rBCancion->Location = System::Drawing::Point(8, 66);
 			this->rBCancion->Name = L"rBCancion";
-			this->rBCancion->Size = System::Drawing::Size(64, 17);
+			this->rBCancion->Size = System::Drawing::Size(70, 21);
 			this->rBCancion->TabIndex = 4;
 			this->rBCancion->Text = L"Canción";
 			this->rBCancion->UseVisualStyleBackColor = true;
@@ -529,7 +555,7 @@ namespace ListadoMusica {
 			this->rBArtista->AutoSize = true;
 			this->rBArtista->Location = System::Drawing::Point(8, 43);
 			this->rBArtista->Name = L"rBArtista";
-			this->rBArtista->Size = System::Drawing::Size(54, 17);
+			this->rBArtista->Size = System::Drawing::Size(69, 21);
 			this->rBArtista->TabIndex = 3;
 			this->rBArtista->Text = L"Artista";
 			this->rBArtista->UseVisualStyleBackColor = true;
@@ -540,7 +566,7 @@ namespace ListadoMusica {
 			this->rBAlbum->Checked = true;
 			this->rBAlbum->Location = System::Drawing::Point(8, 20);
 			this->rBAlbum->Name = L"rBAlbum";
-			this->rBAlbum->Size = System::Drawing::Size(54, 17);
+			this->rBAlbum->Size = System::Drawing::Size(63, 21);
 			this->rBAlbum->TabIndex = 2;
 			this->rBAlbum->TabStop = true;
 			this->rBAlbum->Text = L"Album";
@@ -558,11 +584,13 @@ namespace ListadoMusica {
 			// 
 			this->gvCola->AllowUserToAddRows = false;
 			this->gvCola->AllowUserToDeleteRows = false;
+			this->gvCola->BackgroundColor = System::Drawing::Color::SeaGreen;
 			this->gvCola->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
 			this->gvCola->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(4) {
 				this->clAlbum, this->clCancion,
 					this->clArtista, this->clDuracion
 			});
+			this->gvCola->GridColor = System::Drawing::Color::MediumSeaGreen;
 			this->gvCola->Location = System::Drawing::Point(717, 188);
 			this->gvCola->Name = L"gvCola";
 			this->gvCola->ReadOnly = true;
@@ -595,12 +623,21 @@ namespace ListadoMusica {
 			// 
 			// btnPlay
 			// 
+			this->btnPlay->BackColor = System::Drawing::Color::DarkRed;
+			this->btnPlay->FlatAppearance->BorderColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(0)),
+				static_cast<System::Int32>(static_cast<System::Byte>(64)), static_cast<System::Int32>(static_cast<System::Byte>(0)));
+			this->btnPlay->FlatAppearance->MouseDownBackColor = System::Drawing::Color::DarkRed;
+			this->btnPlay->FlatAppearance->MouseOverBackColor = System::Drawing::Color::DarkGreen;
+			this->btnPlay->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->btnPlay->Font = (gcnew System::Drawing::Font(L"MV Boli", 9.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->btnPlay->ForeColor = System::Drawing::Color::White;
 			this->btnPlay->Location = System::Drawing::Point(929, 127);
 			this->btnPlay->Name = L"btnPlay";
-			this->btnPlay->Size = System::Drawing::Size(67, 37);
+			this->btnPlay->Size = System::Drawing::Size(59, 37);
 			this->btnPlay->TabIndex = 24;
 			this->btnPlay->Text = L"Play";
-			this->btnPlay->UseVisualStyleBackColor = true;
+			this->btnPlay->UseVisualStyleBackColor = false;
 			this->btnPlay->Click += gcnew System::EventHandler(this, &ListadoMusica::btnPlay_Click);
 			// 
 			// ListadoMusica
